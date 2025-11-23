@@ -16,7 +16,7 @@ while true; do
 
   #check current ip and store it into $current_ip 
   #(YOU CAN CHANGE DOMAIN TO WHATEVER IP CHECKER YOU WANT)
-  current_ip=$(curl -s https://ifconfig.io)
+  current_ip=$(curl -s -4 https://ifconfig.io)
 
   #if the ip address are the same then sleep for 30 mins untill checking again
   #if they are NOT the same then will restart wireguad and sleep 1 min untill checking again

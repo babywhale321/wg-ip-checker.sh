@@ -1,0 +1,10 @@
+[Unit]
+Description=wg-ip-checker script
+After=network.target
+
+[Service]
+Type=exec
+ExecStart=/root/wg-ip-checker.sh
+
+[Install]
+WantedBy=multi-user.target

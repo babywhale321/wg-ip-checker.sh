@@ -16,13 +16,18 @@ while true; do
 
   #check current ip and store it into $current_ip 
   #(YOU CAN CHANGE DOMAIN TO WHATEVER IP CHECKER YOU WANT)
-  current_ip=$(curl -s -4 https://ifconfig.io)
-
-  #if the ip address are the same then sleep for 30 mins untill checking again
+  current_ip=$(curl -s -4 --max-time 1 https://ifconfig.io)
+  if [ "$current_ip" != "$static_ip" ]; then
+    current_ip=$(curl -s -4 --max-time 1 https://checkip.amazonaws.com)
+    if [ "$current_ip" != "$static_ip" ]; then
+      current_ip=$(curl -s -4 --max-time 1 https://whatismyip.akamai.com)
+    fi
+  fi
+  #if the ip address are the same then sleep for 10 mins untill checking again
   #if they are NOT the same then will restart wireguad and sleep 1 min untill checking again
   #(YOU CAN CHANGE SLEEP COMMAND TO WHATEVER INTERVALS YOU WANT)
   if [ "$current_ip" == "$static_ip" ]; then
-    sleep 1800
+    sleep 600
   else
     systemctl restart wg-quick@wg0
     echo "restarted wireguard $(date)"
